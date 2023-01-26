@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import styled from "styled-components";
+import PlayGround from "./components/PlayGround/PlayGround";
+import HoverRecord from "./components/HoverRecord/HoverRecord";
 
-function App() {
+const App = () => {
+  const [hoveredSquares, setHoveredSquares] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppWrapper>
+      <PlayGround hoveredSquares={hoveredSquares} setHoveredSquares={setHoveredSquares}/>
+      <HoverRecord hoveredSquares={hoveredSquares} />
+    </AppWrapper>
   );
-}
+};
 
 export default App;
+
+const AppWrapper = styled.div`
+  margin: 80px;
+  width: 600px;
+  white-space: nowrap;
+  background: #ccc;
+`;
