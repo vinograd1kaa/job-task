@@ -5,3 +5,6 @@ export const PlayGroundContainer = styled.div`
   width: 50%;
   white-space: normal;
 `;
+
+export const Br = styled.br`
+`;

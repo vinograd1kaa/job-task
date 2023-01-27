@@ -1,15 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from "styled-components";
-import PlayGround from "./components/PlayGround/PlayGround";
-import HoverRecord from "./components/HoverRecord/HoverRecord";
+import Task from "./components/Task/Task";
 
 const App = () => {
-  const [hoveredSquares, setHoveredSquares] = useState([]);
-
   return (
     <AppWrapper>
-      <PlayGround hoveredSquares={hoveredSquares} setHoveredSquares={setHoveredSquares}/>
-      <HoverRecord hoveredSquares={hoveredSquares} />
+      <Task />
     </AppWrapper>
   );
 };
