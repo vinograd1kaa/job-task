@@ -1,15 +1,15 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import { PlayGroundContainer, Br } from "./styles/PlayGround";
 import { ModeContainer, PickButton, PickButtonPopup, PickPopup, PickPopupItem, StartButton } from "./styles/Mode";
-import { Cell, HoverBlockContainer } from "./styles/HoverBlock";
-import { HoverRecordContainer, HoverRecordItem, HoverRecordTitle } from "./styles/HoverRecord";
+import { HoverBlockContainer } from "./styles/HoverBlock";
+import { HoverRecordContainer, HoverRecordItem, HoverRecordRow, HoverRecordTitle } from "./styles/HoverRecord";
 import RenderCells from "./RenderCells";
 
 const data = [
-  { name: "10x5", rows: 10, cells: 5 },
-  { name: "50x10", rows: 50, cells: 10 },
-  { name: "100x20", rows: 100, cells: 20 },
-  { name: "1000x5", rows: 1000, cells: 5 },
+  { name: "4x4", rows: 4, cells: 4 },
+  { name: "12x12", rows: 12, cells: 12 },
+  { name: "24x24", rows: 66, cells: 66 },
+  { name: "100x100", rows: 100, cells: 100 },
 ];
 
 const Task = () => {
@@ -60,17 +60,19 @@ const Task = () => {
           </PickButtonPopup>
           <StartButton>Start</StartButton>
         </ModeContainer>
-        <HoverBlockContainer ref={hoverBlockRef}>
+        <HoverBlockContainer widthFromCells={numSquares.cells} ref={hoverBlockRef}>
           {renderRows && renderRows.map((arr) => (
-            arr.map((cell) => (
-              <RenderCells
-                key={cell}
-                name={cell}
-                cellsOnRow={(100/numSquares.cells)-0.4}
-                onHoverSquareAdd={onHoverSquareAdd}
-                onHoverSquareDelete={onHoverSquareDelete}
-              />
-            ))
+            <HoverRecordRow>
+              {arr.map((cell) => (
+                <RenderCells
+                  key={cell}
+                  name={cell}
+                  widthOfCells={numSquares.cells}
+                  onHoverSquareAdd={onHoverSquareAdd}
+                  onHoverSquareDelete={onHoverSquareDelete}
+                />
+              ))}
+            </HoverRecordRow>
           ))}
         </HoverBlockContainer>
       </PlayGroundContainer>

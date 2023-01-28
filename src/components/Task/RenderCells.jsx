@@ -1,8 +1,7 @@
-import React, {useEffect, useRef} from 'react';
-import {Cell} from "./styles/HoverBlock";
-import '../../index.css';
+import React, { useEffect, useRef } from 'react';
+import { Cell } from "./styles/HoverBlock";
 
-const RenderCells = ({ name, cellsOnRow, onHoverSquareAdd, onHoverSquareDelete }) => {
+const RenderCells = ({ name, widthOfCells, onHoverSquareAdd, onHoverSquareDelete }) => {
   const cellRef = useRef(null);
 
   const onHover = (cell) => {
@@ -28,7 +27,11 @@ const RenderCells = ({ name, cellsOnRow, onHoverSquareAdd, onHoverSquareDelete }
 
   return (
     <>
-      <Cell style={{ width: `${cellsOnRow}%`, backgroundColor: "#fff" }} ref={cellRef} />
+      <Cell
+        style={{backgroundColor: "#fff"}}
+        widthOfCells={widthOfCells}
+        ref={cellRef}
+      />
     </>
   );
 };

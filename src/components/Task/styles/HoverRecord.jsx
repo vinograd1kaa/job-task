@@ -17,6 +17,11 @@ export const HoverRecordItem = styled.div`
   border: 8px solid #fff;
 `;
 
+export const HoverRecordRow = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
 export const HoverRecordTitle = styled.h2`
 
 `;
