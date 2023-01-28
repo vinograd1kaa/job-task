@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { PlayGroundContainer, Br } from "./styles/PlayGround";
 import { ModeContainer, PickButton, PickButtonPopup, PickPopup, PickPopupItem, StartButton } from "./styles/Mode";
 import { Cell, HoverBlockContainer } from "./styles/HoverBlock";
@@ -6,33 +6,44 @@ import { HoverRecordContainer, HoverRecordItem, HoverRecordTitle } from "./style
 import RenderCells from "./RenderCells";
 
 const data = [
-  { name: "100x10", rows: 100, cells: 10 },
+  { name: "10x5", rows: 10, cells: 5 },
+  { name: "50x10", rows: 50, cells: 10 },
   { name: "100x20", rows: 100, cells: 20 },
-  { name: "1000x100", rows: 1000, cells: 100 },
-  { name: "1000x100", rows: 10000, cells: 100 },
+  { name: "1000x5", rows: 1000, cells: 5 },
 ];
 
 const Task = () => {
+  const hoverBlockRef = useRef();
   const [numSquares, setNumSquares] = useState(data[0]);
-
+  const [hoveredSquares, setHoveredSquares] = useState([]);
   const [selectState, setSelectState] = useState(false);
 
-  const renderRows = Array.from(Array(numSquares.rows).keys()).map((item) => item + 1);
+  const renderRows = Array.from(Array(numSquares.rows).keys()).map((row) => {
+    return Array.from(Array(numSquares.cells).keys()).map((cell) => `row ${row + 1} cell ${cell + 1}`)
+  });
 
   const onChangeSelect = () => {
     setSelectState(!selectState);
   };
 
   const onChangeOption = (option) => {
-    console.log(option);
     setNumSquares(option);
+    setHoveredSquares([]);
+    if (hoverBlockRef.current) {
+      Array.prototype.slice.call(hoverBlockRef.current.children)
+        .forEach((item) => item.style.backgroundColor = "#fff");
+    }
   };
 
-  // const renderHoveredSquares = hoveredSquares.map((item) => {
-  //   const row = Math.ceil(item/5);
-  //
-  //   return `row ${row} col ${item}`;
-  // });
+  const onHoverSquareAdd = (squareToAdd) => {
+    setHoveredSquares((prev) =>
+      ([...prev, squareToAdd]));
+  };
+
+  const onHoverSquareDelete = (squareToDelete) => {
+    setHoveredSquares((prev) =>
+      prev.filter((item) => item !== squareToDelete));
+  };
 
   return (
     <>
@@ -49,18 +60,23 @@ const Task = () => {
           </PickButtonPopup>
           <StartButton>Start</StartButton>
         </ModeContainer>
-        <HoverBlockContainer>
-          {renderRows && renderRows.map((row) => (
-            <RenderCells
-              key={row}
-              cellsOnRow={100/numSquares.cells}
-            />
+        <HoverBlockContainer ref={hoverBlockRef}>
+          {renderRows && renderRows.map((arr) => (
+            arr.map((cell) => (
+              <RenderCells
+                key={cell}
+                name={cell}
+                cellsOnRow={(100/numSquares.cells)-0.4}
+                onHoverSquareAdd={onHoverSquareAdd}
+                onHoverSquareDelete={onHoverSquareDelete}
+              />
+            ))
           ))}
         </HoverBlockContainer>
       </PlayGroundContainer>
       <HoverRecordContainer>
         <HoverRecordTitle>Hover Squares</HoverRecordTitle>
-        {[1].map((item, idx) => (
+        {hoveredSquares.map((item, idx) => (
           <HoverRecordItem key={idx}>{ item }</HoverRecordItem>
         ))}
       </HoverRecordContainer>

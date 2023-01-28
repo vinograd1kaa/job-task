@@ -1,16 +1,17 @@
 import React, {useEffect, useRef} from 'react';
 import {Cell} from "./styles/HoverBlock";
+import '../../index.css';
 
-const RenderCells = ({ cellsOnRow }) => {
-  const cellRef = useRef();
+const RenderCells = ({ name, cellsOnRow, onHoverSquareAdd, onHoverSquareDelete }) => {
+  const cellRef = useRef(null);
 
   const onHover = (cell) => {
-    if (cell.name === "hovered") {
-      cell.name = "default";
+    if (cell.style.backgroundColor !== 'rgb(255, 255, 255)') {
       cell.style.backgroundColor = "#fff";
+      onHoverSquareDelete(name);
     } else {
-      cell.name = "hovered";
       cell.style.backgroundColor = "#00a9f3";
+      onHoverSquareAdd(name);
     }
   };
 
@@ -24,8 +25,11 @@ const RenderCells = ({ cellsOnRow }) => {
     }
   }, []);
 
+
   return (
-    <Cell style={{ width: `${cellsOnRow-0.4}%` }} ref={cellRef} />
+    <>
+      <Cell style={{ width: `${cellsOnRow}%`, backgroundColor: "#fff" }} ref={cellRef} />
+    </>
   );
 };
 

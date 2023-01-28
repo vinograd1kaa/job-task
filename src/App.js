@@ -13,8 +13,10 @@ const App = () => {
 export default App;
 
 const AppWrapper = styled.div`
-  margin: 80px;
   width: 600px;
+  height: 630px;
+  margin: 80px;
   white-space: nowrap;
+  overflow: auto;
   background: #ccc;
 `;
